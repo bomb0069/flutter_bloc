@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple/src/bloc/counter_a/bloc/counter_a_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -10,12 +12,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+    setState(() {});
   }
 
   @override
@@ -25,25 +23,30 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'You have pushed the button this many times:',
+        body: BlocBuilder<CounterABloc, CounterAState>(
+          builder: (context, state) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    'CounterA',
+                  ),
+                  Text(
+                    '${state.count}',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  )
+                ],
               ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
+            );
+          },
         ),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () =>
+                  context.read<CounterABloc>().add(CounterEventReset()),
               tooltip: 'Reset',
               child: const Icon(Icons.restore),
             ),
@@ -51,7 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 18,
             ),
             FloatingActionButton(
-              onPressed: () {},
+              onPressed: () =>
+                  context.read<CounterABloc>().add(CounterEventAdd()),
               tooltip: 'Increment',
               child: const Icon(Icons.add),
             ),
