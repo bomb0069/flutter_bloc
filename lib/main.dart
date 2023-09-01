@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simple/src/app_route.dart';
 import 'package:simple/src/bloc/app_bloc_observer.dart';
 import 'package:simple/src/bloc/counter_a/bloc/counter_a_bloc.dart';
 import 'package:simple/src/pages/home_page.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       create: (BuildContext context) => CounterABloc(),
       child: MaterialApp(
         title: 'Flutter Demo',
+        routes: AppRoute().getAll,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
